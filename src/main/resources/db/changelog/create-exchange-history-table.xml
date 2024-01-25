@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <!-- Zestaw zmian (changeSet) do utworzenia tabeli exchange_history -->
+    <changeSet id="create-exchange-history-table" author="admin">
+        <createTable tableName="exchange_history">
+            <!-- Definicja kolumn dla tabeli exchange_history -->
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="amount" type="BIGINT"/>
+            <column name="currency_from" type="VARCHAR(10)"/>
+            <column name="currency_to" type="VARCHAR(10)"/>
+            <column name="exchange_timestamp" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Zestaw zmian (changeSet) do załadowania przykładowych danych do tabeli exchange_history -->
+    <changeSet id="insert-example-data" author="admin">
+        <loadData
+                tableName="exchange_history"
+                file="classpath:/db/changelog/data/exchange_history.csv"
+                separator=",">
+            <!-- Mapowanie kolumn w pliku CSV na kolumny tabeli exchange_history -->
+            <column name="amount" type="BIGINT"/>
+            <column name="currency_from" type="VARCHAR(10)"/>
+            <column name="currency_to" type="VARCHAR(10)"/>
+            <column name="exchange_timestamp" type="TIMESTAMP"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
